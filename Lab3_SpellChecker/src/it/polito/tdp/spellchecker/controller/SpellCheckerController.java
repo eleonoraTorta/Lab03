@@ -57,7 +57,7 @@ public class SpellCheckerController {
     void doSpellCheck(ActionEvent event) {
     	
     	long t1 = System.nanoTime();
-    	//Rendi l'interfaccia visibile
+    	//Rendi l'interfaccia visibile (in SceneBuilder erano settati non visibili)
     	txtTempo.setVisible(true);
     	txtResult.setVisible(true);
     		

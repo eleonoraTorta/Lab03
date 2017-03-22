@@ -27,7 +27,7 @@ public class Dictionary {
 		}
 			
 	}
-	
+	/*
 	public ArrayList<RichWord> spellCheckText (ArrayList <String> inputTextList){
 		ArrayList <RichWord> listaParole = new ArrayList<RichWord>();
 		for(String s : inputTextList){
@@ -44,5 +44,44 @@ public class Dictionary {
 		return listaParole;
 		
 	}
-
+	*/
+	public ArrayList<RichWord> spellCheckText (ArrayList <String> inputTextList){
+		ArrayList <RichWord> listaParole = new ArrayList<RichWord>();
+		for(String s : inputTextList){
+			if(this.ricerca(s)){
+				RichWord word = new RichWord(s, true);
+				listaParole.add(word);
+			}
+			else{
+				RichWord word = new RichWord(s, false);
+				listaParole.add(word);
+			}
+		}
+	
+		return listaParole;
+	}
+	
+	public boolean ricerca(String s){
+		
+		int inizio = 0;
+		int fine = dizionario.size()-1;
+		int centrale;
+		boolean trovato = false;
+		
+		while( trovato == false  && inizio <=fine){
+			centrale = (fine +inizio) /2;
+			
+			if( s.compareTo(dizionario.get(centrale)) == 0){
+				trovato = true;
+			}
+			if( s.compareTo(dizionario.get(centrale)) < 0){
+				fine = centrale -1;
+			}
+			if( s.compareTo(dizionario.get(centrale)) > 0){
+				inizio = centrale +1;
+			}
+		}
+		return trovato;
+	}
+	
 }
