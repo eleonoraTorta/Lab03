@@ -66,8 +66,8 @@ public class SpellCheckerController {
     	
     	ArrayList <String> testoInput = new ArrayList <String>();
     	String testo = txtDaTradurre.getText();
-    	testo.replaceAll("[ \\p{Punct}]", "");
-    	String array [] = testo.split(" ");
+    	String testoNew = testo.replaceAll("[ \\p{Punct}]", "");
+    	String array [] = testoNew.split(" ");
     	for(int i = 0; i< array.length; i++){
     		testoInput.add(array[i]);
     	}

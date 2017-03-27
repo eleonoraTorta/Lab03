@@ -27,7 +27,7 @@ public class Dictionary {
 		}
 			
 	}
-	/*
+	
 	public ArrayList<RichWord> spellCheckText (ArrayList <String> inputTextList){
 		ArrayList <RichWord> listaParole = new ArrayList<RichWord>();
 		for(String s : inputTextList){
@@ -44,7 +44,7 @@ public class Dictionary {
 		return listaParole;
 		
 	}
-	*/
+	/*
 	public ArrayList<RichWord> spellCheckText (ArrayList <String> inputTextList){
 		ArrayList <RichWord> listaParole = new ArrayList<RichWord>();
 		for(String s : inputTextList){
@@ -60,7 +60,7 @@ public class Dictionary {
 	
 		return listaParole;
 	}
-	
+*/	
 	public boolean ricerca(String s){
 		
 		int inizio = 0;
