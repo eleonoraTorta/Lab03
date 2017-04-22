@@ -17,6 +17,8 @@ public class SpellCheckerController {
 	
 	private Dictionary model;
 	
+	ArrayList <String> testoInput = new ArrayList <String>();
+	
 
     @FXML
     private ResourceBundle resources;
@@ -56,28 +58,40 @@ public class SpellCheckerController {
     @FXML
     void doSpellCheck(ActionEvent event) {
     	
-    	long t1 = System.nanoTime();
+    	//Inizializzazione
     	//Rendi l'interfaccia visibile (in SceneBuilder erano settati non visibili)
     	txtTempo.setVisible(true);
     	txtResult.setVisible(true);
-    		
-    	String lingua = cmbLingua.getValue();
-    	model.loadDictionary(lingua.toLowerCase());
+    	testoInput.clear();
     	
-    	ArrayList <String> testoInput = new ArrayList <String>();
+    	
+    	//Gestisco la selezione della lingua
+    	model.loadDictionary(cmbLingua.getValue());
+    	
+    	//Prendo il testo da corregere
     	String testo = txtDaTradurre.getText();
-    	String testoNew = testo.replaceAll("[ \\p{Punct}]", "");
-    	String array [] = testoNew.split(" ");
-    	for(int i = 0; i< array.length; i++){
-    		testoInput.add(array[i]);
+    	if( testo.isEmpty()){
+    		return;
     	}
     	
-    	ArrayList <RichWord> listaParole = (ArrayList<RichWord>) model.spellCheckText(testoInput);
+    	//Divido il testo usando gli spazi e elimino la punteggiatura
+    	String array [] = testo.split(" ");
+    	for(int i = 0; i< array.length; i++){
+    		testoInput.add(array[i].replaceAll("[ \\p{Punct}]", "").trim().toLowerCase());
+    	}
+    	
+    	//Chiamo la funzione per la correzione del testo
+    	long t1 = System.nanoTime();
+    	ArrayList <RichWord> listaParole = model.spellCheckText(testoInput);
+    	long t2 = System.nanoTime();
+    	
+    	
+    	//Stampo l'analisi
     	ArrayList <String> paroleErrate = new ArrayList <String>();
     	for(int i = 0; i<listaParole.size(); i++ ){
     		if(listaParole.get(i).isCorretta() == false){
     			String parola = listaParole.get(i).getParola();
-    			paroleErrate.add(parola);
+    			paroleErrate.add(parola);   
     		}
     	}
     	String elenco = "";
@@ -85,12 +99,12 @@ public class SpellCheckerController {
     		elenco = elenco + s + "\n"; }
     	txtWrongWords.setText(elenco);
     	
+    	//Risultato: numero di errori
     	int errori = paroleErrate.size();
     	txtResult.setText("The text contains " + errori + " errors");
     	
-    	long t2 = System.nanoTime();
-    	long differenza = t2-t1;
-    	txtTempo.setText("Spell check completed in " + differenza/1e9 + " secondi");
+    	//Stampo tempo di completamento 
+    	txtTempo.setText("Spell check completed in " + (t2 - t1) / 1e9 + " secondi");
     
     }
    
@@ -104,7 +118,7 @@ public class SpellCheckerController {
         assert txtResult != null : "fx:id=\"txtResult\" was not injected: check your FXML file 'SpellChecker.fxml'.";
         assert btnClear != null : "fx:id=\"btnClear\" was not injected: check your FXML file 'SpellChecker.fxml'.";
         
-        cmbLingua.getItems().addAll("English", "Italiano");
+        cmbLingua.getItems().addAll("English", "Italian");
         if(cmbLingua.getItems().size() >0){
             cmbLingua.setValue(cmbLingua.getItems().get(0));  
         }
